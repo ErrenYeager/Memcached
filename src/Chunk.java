@@ -1,11 +1,11 @@
-public class Chunk {
-    private Object item; // Represents the stored item in the chunk
+class Chunk{
+    private Object value;
 
-    public Chunk(Object item) {
-        this.item = item;
+    public Chunk(Object value) {
+        this.value = value;
     }
 
-    public Object getItem() {
-        return item;
+    public Object getValue() {
+        return value;
     }
 }

@@ -1,32 +1,49 @@
-import java.util.*;
-
-
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Map;
 
 class Slab {
-    private int chunkSize; // Size of each chunk in bytes
-    private List<Chunk> chunks; // List of chunks within the slab
+    private int chunkSize;
+    private LinkedList<Chunk> chunks;
 
-    public Slab(int chunkSize) {
+    public Slab(int chunkSize, int initialChunks) {
         this.chunkSize = chunkSize;
-        this.chunks = new ArrayList<>();
-    }
+        this.chunks = new LinkedList<>();
 
-    public boolean isFull() {
-        return chunks.size() == getMaxChunks();
-    }
-
-    public int getMaxChunks() {
-        return MemoryPool.PAGE_SIZE / chunkSize;
-    }
-
-    public Chunk allocateChunk(Object item) {
-        if (isFull()) {
-            return null; // No available chunk in this slab
+        for (int i = 0; i < initialChunks; i++) {
+            chunks.add(new Chunk(chunkSize));
         }
+    }
 
-        Chunk chunk = new Chunk(item);
-        chunks.add(chunk);
-        return chunk;
+    public int getChunkSize() {
+        return chunkSize;
+    }
+
+    public LinkedList<Chunk> getChunks() {
+        return chunks;
+    }
+
+    public Object getValue(String key) {
+        for (Chunk chunk : chunks) {
+
+        }
+    }
+
+    public boolean hasAvailableChunk() {
+        for (Chunk chunk : chunks) {
+            if (!chunk.isFull()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Chunk getAvailableChunk() {
+        for (Chunk chunk : chunks) {
+            if (!chunk.isFull()) {
+                return chunk;
+            }
+        }
+        return null;
     }
 }
-

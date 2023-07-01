@@ -1,18 +1,17 @@
 public class Main {
     public static void main(String[] args) {
-        MemoryPool memoryPool = new MemoryPool();
-        memoryPool.addSlabClass(64); // Add slab class for item size of 64 bytes
+        Memcached memcached = new Memcached(100, 10, 10, 5);
 
-        // Allocate chunks for items
-        Chunk chunk1 = memoryPool.allocateChunk(64, "Item 1");
-        Chunk chunk2 = memoryPool.allocateChunk(64, "Item 2");
+        // Inserting values into the cache
+        // TODO: ADD TTL
+        memcached.put("key1", "value1");
+        memcached.put("key2", "value2");
+        memcached.put("key3", "value3");
 
-        // Retrieve stored items from chunks
-        if (chunk1 != null) {
-            System.out.println("Item 1: " + chunk1.getItem());
-        }
-        if (chunk2 != null) {
-            System.out.println("Item 2: " + chunk2.getItem());
-        }
+        // Retrieving values from the cache
+        System.out.println(memcached.get("key1")); // Output: value1
+        System.out.println(memcached.get("key2")); // Output: value2
+        System.out.println(memcached.get("key3")); // Output: value3
+        System.out.println(memcached.get("key4")); // Output: null
     }
 }
